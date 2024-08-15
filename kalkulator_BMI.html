@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Kalkulator BMI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Kalkulator BMI</h1>
+    </header>
+
+    <main>
+        <article>
+            <p>Website ini saya buat untuk memenuhi tugas dan mendapatkan sertifikat dari RevoU SEFC</p>
+        </article>
+        <form id="bmi-form">
+            <div>
+                <h3>Jenis-Kelamin</h3>
+                <input type="radio" id="Pria" name="Jenis-Kelamin"><label for="Pria">Pria</label>
+                <input type="radio" id="Wanita" name="Jenis-Kelamin"><label for="Wanita">Wanita</label>
+            </div>
+
+            <div>
+                <h3>Berat-Badan (kg)</h3>
+                <input type="number" id="berat-badan" placeholder="Masukkan berat badan">
+            </div>
+
+            <div>
+                <h3>Usia</h3>
+                <input type="number" id="usia" placeholder="Masukkan usia">
+            </div>
+
+            <div>
+                <h3>Tinggi-Badan (cm)</h3>
+                <input type="number" id="tinggi-badan" placeholder="Masukkan tinggi badan">
+            </div>
+
+            <div>
+                <button id="hitung">Hitung</button>
+                <button id="reset">Reset</button>
+            </div>
+
+            <div id="hasil"></div>
+
+            <article>
+                <h2>Thanks for RevoU</h2>
+                <p>Kelas ini menambah pengetahuan serta keterampilan dalam pembuatan website. Semoga ke depannya tim RevoU dapat lebih sering menyelenggarakan kelas gratis seperti ini, sehingga lebih banyak orang memiliki kesempatan untuk belajar dan mengembangkan diri menjadi software engineer.</p>
+            </article>
+        </form>
+    </main>
+
+    <footer></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('bmi-form');
+            const hitungButton = document.getElementById('hitung');
+            const resetButton = document.getElementById('reset');
+            const beratBadanInput = document.getElementById('berat-badan');
+            const tinggiBadanInput = document.getElementById('tinggi-badan');
+            const hasilSection = document.getElementById('hasil');
+
+            hitungButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                const berat = parseFloat(beratBadanInput.value);
+                const tinggi = parseFloat(tinggiBadanInput.value) / 100;
+
+                if (!berat || !tinggi) {
+                    alert('Mohon isi semua bidang input dengan benar.');
+                    return;
+                }
+
+                const bmi = berat / (tinggi * tinggi);
+                let kategori = '';
+
+                if (bmi < 18.5) {
+                    kategori = 'Kurus';
+                } else if (bmi >= 18.5 && bmi < 24.9) {
+                    kategori = 'Normal';
+                } else if (bmi >= 25 && bmi < 29.9) {
+                    kategori = 'Gemuk';
+                } else {
+                    kategori = 'Obesitas';
+                }
+
+                hasilSection.innerHTML = `<h3>Hasil BMI</h3><p>BMI Anda: ${bmi.toFixed(2)} (${kategori})</p>`;
+            });
+
+            resetButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                form.reset();
+                hasilSection.innerHTML = '';
+            });
+        });
+    </script>
+</body>
+</html>
